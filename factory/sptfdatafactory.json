@@ -1,0 +1,9 @@
+{
+	"name": "sptfdatafactory",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6eb3b75f-c7d6-478a-8c32-ea66475566bf",
+		"tenantId": "60af37d5-3b47-47e2-a33d-87868c23c510"
+	}
+}
