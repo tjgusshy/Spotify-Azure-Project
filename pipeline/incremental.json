@@ -146,8 +146,6 @@
 						{
 							"name": "ifincremental",
 							"type": "IfCondition",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "azuresqltolake",
