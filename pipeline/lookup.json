@@ -312,7 +312,7 @@
 			},
 			"table": {
 				"type": "string",
-				"defaultValue": "DimUser_cdc"
+				"defaultValue": "DimUser"
 			},
 			"cdc_col": {
 				"type": "string",
