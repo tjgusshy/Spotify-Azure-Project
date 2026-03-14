@@ -1,0 +1,19 @@
+subscription_id     = "5ca58f46-7497-4c6c-bed2-c636bac45a03"   # az account show --query id -o tsv
+resource_group_name = "your-resource-group-name"
+
+# Optional overrides (defaults are already set in variables.tf)
+# location           = "uksouth"
+# sql_admin_username = "teejay"
+# sql_sku            = "S0"   # change to "Basic" (~$5/mo) to cut costs when idle
+
+# Sensitive values — prefer env vars to avoid accidental commits:
+#   $env:TF_VAR_sql_admin_password   = "yourpassword"
+#   $env:TF_VAR_storage_account_key  = "yourkey"
+sql_admin_password  = "your-sql-password"
+storage_account_key = "your-storage-account-key"   # Azure Portal > sptfsgproject > Access keys > key1
+
+tags = {
+  project     = "spotify-azure"
+  environment = "personal"
+  managed_by  = "terraform"
+}
