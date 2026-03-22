@@ -19,7 +19,9 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "azure_sql" {
   name            = "azure_sql"
   data_factory_id = azurerm_data_factory.main.id
 
-  connection_string = "Server=tcp:azprojectsptf.database.windows.net,1433;Initial Catalog=sptfDb;Persist Security Info=False;User ID=${var.sql_admin_username};Password=${var.sql_admin_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  # Use a connection string without user/password for managed identity
+  connection_string = "Server=tcp:azprojectsptf.database.windows.net,1433;Initial Catalog=sptfDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  # No authentication_type or managed_identity block needed for managed identity
 }
 
 # ── Linked Service: ADLS Gen2 ────────────────────────────────────────────────

@@ -1,3 +1,13 @@
+
+# Assign ADF's managed identity access to Azure SQL
+resource "azurerm_role_assignment" "adf_sql_contributor" {
+  scope                = azurerm_mssql_server.main.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_data_factory.main.identity[0].principal_id
+}
+
+# Get current Azure client configuration (for tenant_id, etc.)
+data "azurerm_client_config" "current" {}
 # ── Resource Group ────────────────────────────────────────────────────────────
 # Import command is in import.ps1. Terraform will manage — but NOT delete —
 # the resource group as long as other resources still live inside it.
@@ -97,3 +107,4 @@ resource "azurerm_databricks_workspace" "main" {
 
   tags = var.tags
 }
+
