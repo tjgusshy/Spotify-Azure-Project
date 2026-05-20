@@ -276,8 +276,6 @@ Spotify-Azure-Project/
 * Terraform
 * GitHub Account
 
----
-
 
 # Setup Steps
 
