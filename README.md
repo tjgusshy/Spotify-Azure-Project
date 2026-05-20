@@ -18,8 +18,7 @@ The project demonstrates industry-standard data engineering practices including:
 ---
 
 # Architecture Overview
-
-![Architecture Diagram](images/architecture.png)
+![alt text](image.png)
 
 ---
 
