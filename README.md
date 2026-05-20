@@ -5,80 +5,81 @@ End-to-end Azure Data Engineering project focused on building a scalable Spotify
 The project demonstrates industry-standard data engineering practices including:
 
 - Incremental data loading
-Dynamic parameterized pipelines
-Watermarking for CDC processing
-Historical backfilling
-CI/CD integration
-Monitoring & alerting
-Infrastructure as Code (IaC) using Terraform
-Architecture Overview
+- Dynamic parameterized pipelines
+- Watermarking for CDC processing
+- Historical backfilling
+- CI/CD integration
+- Monitoring & alerting
+- Infrastructure as Code (IaC) using Terraform
+- Architecture Overview
 
 Tech Stack
-Service	Purpose
-Azure Data Factory	Data ingestion & orchestration
-Azure SQL Database	Source system
-Azure Data Lake Storage Gen2	Bronze data lake storage
-Azure Logic Apps	Monitoring & alerting
-GitHub Actions	CI/CD automation
-Terraform	Infrastructure provisioning
-Project Architecture
-Data Flow
-Data is sourced from Azure SQL Database
-Azure Data Factory performs:
-Initial load
-Incremental load
-Backfill processing
-Data is stored in the Bronze layer as Parquet files
-Watermark (cdc.json) is updated after successful ingestion
-Logic Apps monitor pipelines and trigger alerts
-GitHub Actions automates deployment
-Terraform provisions Azure resources
-Key Features
-Incremental Loading
+
+- Service	Purpose
+- Azure Data Factory	Data ingestion & orchestration
+- Azure SQL Database	Source system
+- Azure Data Lake Storage Gen2	Bronze data lake storage
+- Azure Logic Apps	Monitoring & alerting
+- GitHub Actions	CI/CD automation
+- Terraform	Infrastructure provisioning
+- Project Architecture
+- Data Flow
+- Data is sourced from Azure SQL Database
+- Azure Data Factory performs:
+- Initial load
+-Incremental load
+- Backfill processing
+- Data is stored in the Bronze layer as Parquet files
+- Watermark (cdc.json) is updated after successful ingestion
+- Logic Apps monitor pipelines and trigger alerts
+- GitHub Actions automates deployment
+-  provisions Azure resources
+- Key Features
+- Incremental Loading
 
 Uses a watermarking technique with cdc.json to process only new or updated records.
 
 Process
-Read last CDC timestamp
-Extract new records only
-Load data into Bronze layer
-Update watermark
-Benefits
-Avoids full reloads
-Reduces compute cost
-Improves pipeline performance
-Supports scalable ingestion
-Dynamic Parameterized Pipelines
+- Read last CDC timestamp
+- Extract new records only
+- Load data into Bronze layer
+- Update watermark
+- Benefits
+- Avoids full reloads
+- Reduces compute cost
+- Improves pipeline performance
+- Supports scalable ingestion
+- Dynamic Parameterized Pipelines
 
 ADF pipelines are reusable across multiple tables using parameters such as:
 
-Schema name
-Table name
-CDC column
-from_date for backfill
-Backfill Support
+- Schema name
+- Table name
+- CDC column
+- from_date for backfill
+- Backfill Support
 
 Historical data loads are supported using an optional from_date parameter.
 
 If:
 
-from_date is empty → Incremental load runs
-from_date has a value → Backfill load runs
-CI/CD Integration
+- from_date is empty → Incremental load runs
+- from_date has a value → Backfill load runs
+- CI/CD Integration
 
 GitHub is integrated with Azure Data Factory for automated deployments.
 
 Workflow
-Development happens in feature/dev branches
-GitHub Actions validates and deploys pipelines
-adf_publish branch stores deployment artifacts
-Monitoring & Alerting
+- Development happens in feature/dev branches
+- GitHub Actions validates and deploys pipelines
+- adf_publish branch stores deployment artifacts
+- Monitoring & Alerting
 
 Azure Logic Apps monitor:
 
-Pipeline failures
-Runtime issues
-Processing alerts
+- Pipeline failures
+- Runtime issues
+- Processing alerts
 
 Notifications can be triggered through:
 
@@ -89,12 +90,13 @@ Azure Resources
 
 The following resources were provisioned using Terraform:
 
-Resource Group
-Azure Data Factory
-Azure Data Lake Storage Gen2
-Azure SQL Database
-Azure Logic Apps
-Bronze Layer Structure
+- Resource Group
+- Azure Data Factory
+- Azure Data Lake Storage Gen2
+- Azure SQL Database
+- Azure Logic Apps
+- Bronze Layer Structure
+  
 /bronze/
 │
 ├── DimArtist/
@@ -102,7 +104,9 @@ Bronze Layer Structure
 ├── DimTrack/
 ├── FactStream/
 └── FactPlaylist/
+
 Metadata Structure
+
 /metadata/
 │
 ├── cdc.json
