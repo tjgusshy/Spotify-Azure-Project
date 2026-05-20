@@ -275,16 +275,14 @@ Spotify-Azure-Project/
 * Azure Storage Account
 * Terraform
 * GitHub Account
+
 ---
 
-
 # Setup Steps
-
 
 ## 1. Clone Repository
 
 git clone https://github.com/your-username/Spotify-Azure-Project.git
-
 
 
 ## 2. Deploy Infrastructure
