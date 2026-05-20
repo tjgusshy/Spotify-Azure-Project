@@ -121,21 +121,24 @@ Pipeline Activities
 The ADF pipeline uses:
 
 Activity	Purpose
-- Lookup Activity	Reads CDC watermark
+- Lookup: Activity Reads CDC watermark
 
-- Script Activity	Gets max CDC value
+- Script: Activity Gets max CDC value
 
-- Copy Activity	Loads incremental data
+- Copy: Activity Loads incremental data
 
-- If Condition	Checks if new data exists
+- If Condition:	Checks if new data exists
 
-- Delete Activity	Removes unnecessary empty files
+- Delete Activity: Removes unnecessary empty files
 
 Example Incremental Query
 SELECT *
 FROM table_name
 WHERE updated_at > last_cdc_timestamp
+
+
 Folder Structure
+
 Spotify-Azure-Project/
 │
 ├── adf/
@@ -158,6 +161,8 @@ Azure SQL Database
 Azure Storage Account
 Terraform
 GitHub Account
+
+
 Setup Steps
 1. Clone Repository
 git clone https://github.com/your-username/Spotify-Azure-Project.git
@@ -171,7 +176,9 @@ Publish pipelines
 4. Configure GitHub Integration
 Connect ADF to GitHub
 Set up GitHub Actions
+
 Future Improvements
+
 Add Silver & Gold layers
 Introduce Azure Databricks transformations
 Add Delta Lake support
