@@ -1,92 +1,100 @@
-Spotify Azure Data Engineering Project
+Azure Data Engineering Project
 
-End-to-end Azure Data Engineering project focused on building a scalable Spotify data ingestion pipeline using a Bronze Layer architecture within Azure Data Lake Storage Gen2.
+End-to-end Azure Data Engineering project focused on building a scalable Spotify data ingestion pipeline using Azure services and a Bronze Layer architecture.
 
-The project demonstrates modern data engineering practices including:
+The project demonstrates industry-standard data engineering practices including:
 
-Incremental data loading
+- Incremental data loading
 Dynamic parameterized pipelines
-CI/CD integration
 Watermarking for CDC processing
-Backfilling historical data
-Monitoring and alerting
-Infrastructure as Code using Terraform
+Historical backfilling
+CI/CD integration
+Monitoring & alerting
+Infrastructure as Code (IaC) using Terraform
 Architecture Overview
-Technologies Used
-Azure Data Factory (ADF)
-Azure Data Lake Storage Gen2 (ADLS Gen2)
-Azure SQL Database
-Azure Logic Apps
-GitHub Actions
-Terraform
-Project Overview
 
-The solution ingests Spotify-related data from Azure SQL Database into the Bronze layer of Azure Data Lake Storage Gen2 using Azure Data Factory.
+Tech Stack
+Service	Purpose
+Azure Data Factory	Data ingestion & orchestration
+Azure SQL Database	Source system
+Azure Data Lake Storage Gen2	Bronze data lake storage
+Azure Logic Apps	Monitoring & alerting
+GitHub Actions	CI/CD automation
+Terraform	Infrastructure provisioning
+Project Architecture
+Data Flow
+Data is sourced from Azure SQL Database
+Azure Data Factory performs:
+Initial load
+Incremental load
+Backfill processing
+Data is stored in the Bronze layer as Parquet files
+Watermark (cdc.json) is updated after successful ingestion
+Logic Apps monitor pipelines and trigger alerts
+GitHub Actions automates deployment
+Terraform provisions Azure resources
+Key Features
+Incremental Loading
 
-The project focuses on:
+Uses a watermarking technique with cdc.json to process only new or updated records.
 
-Building reusable ingestion pipelines
-Performing incremental data extraction
-Managing CDC watermarking
-Supporting backfill operations
-Automating deployments with CI/CD
-Solution Architecture
-1. Infrastructure Provisioning
+Process
+Read last CDC timestamp
+Extract new records only
+Load data into Bronze layer
+Update watermark
+Benefits
+Avoids full reloads
+Reduces compute cost
+Improves pipeline performance
+Supports scalable ingestion
+Dynamic Parameterized Pipelines
 
-All Azure resources were provisioned using Terraform.
+ADF pipelines are reusable across multiple tables using parameters such as:
 
-Resources Created
+Schema name
+Table name
+CDC column
+from_date for backfill
+Backfill Support
+
+Historical data loads are supported using an optional from_date parameter.
+
+If:
+
+from_date is empty → Incremental load runs
+from_date has a value → Backfill load runs
+CI/CD Integration
+
+GitHub is integrated with Azure Data Factory for automated deployments.
+
+Workflow
+Development happens in feature/dev branches
+GitHub Actions validates and deploys pipelines
+adf_publish branch stores deployment artifacts
+Monitoring & Alerting
+
+Azure Logic Apps monitor:
+
+Pipeline failures
+Runtime issues
+Processing alerts
+
+Notifications can be triggered through:
+
+Email
+Teams
+SMS
+Azure Resources
+
+The following resources were provisioned using Terraform:
+
 Resource Group
 Azure Data Factory
 Azure Data Lake Storage Gen2
 Azure SQL Database
 Azure Logic Apps
-2. Data Ingestion with Azure Data Factory
-
-Azure Data Factory is used to orchestrate ingestion pipelines from Azure SQL Database into the Bronze layer.
-
-Pipeline Features
-Parameterized pipelines
-Dynamic datasets
-Incremental loading
-Initial full load
-Historical backfill support
-Watermarking using JSON metadata
-Reusable ingestion framework
-Parameters Used
-
-The ingestion pipeline accepts:
-
-Schema name
-Table name
-CDC column
-Optional from_date parameter for backfill
-
-This allows a single pipeline to ingest multiple tables dynamically.
-
-3. Incremental Loading Strategy
-
-The project implements incremental loading using a watermarking technique.
-
-Process
-Read the last CDC value from cdc.json
-Query only new or updated records from Azure SQL
-Load new data into the Bronze layer
-Update the watermark value
-Benefits
-Avoids full table reloads
-Reduces compute cost
-Improves performance
-Supports scalable ingestion across multiple tables
-Example Query
-SELECT *
-FROM table_name
-WHERE updated_at > last_cdc_timestamp
-4. Bronze Layer – ADLS Gen2
-
-The Bronze layer stores raw ingested data as Parquet files.
-
-Structure
+Bronze Layer Structure
 /bronze/
 │
 ├── DimArtist/
@@ -94,72 +102,80 @@ Structure
 ├── DimTrack/
 ├── FactStream/
 └── FactPlaylist/
-Metadata Files
+Metadata Structure
+/metadata/
+│
+├── cdc.json
+└── empty.json
+Purpose
+File	Description
+cdc.json	Stores latest CDC timestamp
+empty.json	Used during watermark updates
+Pipeline Activities
 
-Additional files are maintained for CDC tracking:
+The ADF pipeline uses:
 
-cdc.json → Stores latest watermark timestamp
-empty.json → Used during watermark updates
-5. Azure Data Factory Pipeline Flow
-
-The ingestion pipeline performs the following steps:
-
-Lookup activity retrieves the last CDC value
-Script activity gets the latest CDC timestamp from Azure SQL
-Copy activity loads incremental data into Bronze
-Copy activity updates cdc.json
-Delete activity removes unnecessary empty files
-Activities Used
-Lookup Activity
-Script Activity
-Copy Activity
-If Condition Activity
-Delete Activity
-6. CI/CD Integration
-
-GitHub was integrated with Azure Data Factory for CI/CD.
-
-Workflow
-Development branch used for pipeline changes
-GitHub Actions automates deployment
-ADF publish branch handles release artifacts
-Benefits
-Version control
-Automated deployment
-Easier collaboration
-Consistent releases
-7. Monitoring & Alerting
-
-Azure Logic Apps were implemented for monitoring and alerting.
-
-Monitoring Includes
-Pipeline failures
-Runtime monitoring
-Alert notifications
-Key Features
-End-to-end Azure ingestion pipeline
-Bronze Layer architecture
-Dynamic parameterized ADF pipelines
-Incremental loading using watermarking
-Historical backfilling support
-CI/CD with GitHub Actions
-Infrastructure as Code using Terraform
-Monitoring and alerting with Logic Apps
+Activity	Purpose
+Lookup Activity	Reads CDC watermark
+Script Activity	Gets max CDC value
+Copy Activity	Loads incremental data
+If Condition	Checks if new data exists
+Delete Activity	Removes unnecessary empty files
+Example Incremental Query
+SELECT *
+FROM table_name
+WHERE updated_at > last_cdc_timestamp
 Folder Structure
 Spotify-Azure-Project/
 │
 ├── adf/
-├── datasets/
-├── pipelines/
+│   ├── pipelines/
+│   ├── datasets/
+│   ├── linkedServices/
+│   └── triggers/
+│
 ├── terraform/
+│
 ├── images/
+│
 └── README.md
+Getting Started
+Prerequisites
+Azure Subscription
+Azure Data Factory
+Azure SQL Database
+Azure Storage Account
+Terraform
+GitHub Account
+Setup Steps
+1. Clone Repository
+git clone https://github.com/your-username/Spotify-Azure-Project.git
+2. Deploy Infrastructure
+terraform init
+terraform apply
+3. Configure Azure Data Factory
+Create linked services
+Configure datasets
+Publish pipelines
+4. Configure GitHub Integration
+Connect ADF to GitHub
+Set up GitHub Actions
 Future Improvements
-Add Silver and Gold layers
+Add Silver & Gold layers
 Introduce Azure Databricks transformations
-Implement Delta Live Tables
-Add Power BI reporting
+Add Delta Lake support
 Implement automated data quality checks
+Add Power BI dashboards
+Learning Outcomes
+
+This project demonstrates:
+
+Azure Data Factory orchestration
+Incremental ingestion design patterns
+Watermarking techniques
+Dynamic pipeline development
+CI/CD integration
+Infrastructure automation with Terraform
 Conclusion
 
-This project demonstrates a production-style Azure Data Engineering ingestion solution using Azure Data Factory and Azure Data Lake Storage Gen2. It showcases scalable ingestion design patterns including incremental loading, reusable pipelines, CI/CD automation, and infrastructure provisioning using Terraform.
+This project showcases a production-style Azure Data Engineering ingestion pipeline using Azure Data Factory and Azure Data Lake Storage Gen2. It focuses on scalable, reusable, and cost-efficient ingestion patterns commonly used in enterprise data platforms.
