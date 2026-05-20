@@ -108,6 +108,7 @@ The following resources were provisioned using Terraform:
 Metadata Structure
 
 /metadata/
+
 │
 ├── cdc.json
 └── empty.json
@@ -120,11 +121,16 @@ Pipeline Activities
 The ADF pipeline uses:
 
 Activity	Purpose
-Lookup Activity	Reads CDC watermark
-Script Activity	Gets max CDC value
-Copy Activity	Loads incremental data
-If Condition	Checks if new data exists
-Delete Activity	Removes unnecessary empty files
+- Lookup Activity	Reads CDC watermark
+
+- Script Activity	Gets max CDC value
+
+- Copy Activity	Loads incremental data
+
+- If Condition	Checks if new data exists
+
+- Delete Activity	Removes unnecessary empty files
+
 Example Incremental Query
 SELECT *
 FROM table_name
@@ -143,6 +149,7 @@ Spotify-Azure-Project/
 ├── images/
 │
 └── README.md
+
 Getting Started
 Prerequisites
 Azure Subscription
