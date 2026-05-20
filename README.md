@@ -278,13 +278,15 @@ Spotify-Azure-Project/
 
 ---
 
+
 # Setup Steps
+
 
 ## 1. Clone Repository
 
-```bash id="odxwfi"
 git clone https://github.com/your-username/Spotify-Azure-Project.git
-```
+
+
 
 ## 2. Deploy Infrastructure
 
