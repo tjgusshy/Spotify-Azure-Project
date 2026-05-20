@@ -52,7 +52,9 @@ The project demonstrates industry-standard data engineering practices including:
 7. GitHub Actions automates deployment
 8. Terraform provisions Azure resources
 
-![alt text](image-18.png)
+C:\Users\ADETUNJI\Documents\azure and big data\Azure\Spotify-Azure-Project\Images\image-1.png
+
+![alt text](Images\image-1.png)
 
 
 ![alt text](image-19.png)
