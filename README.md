@@ -1,6 +1,9 @@
 Azure Data Engineering Project
 
-End-to-end Azure Data Engineering project focused on building a scalable Spotify data ingestion pipeline using Azure services and a Bronze Layer architecture
+End-to-end Azure Data Engineering project focused on building a scalable Spotify data ingestion pipeline using Azure services and a Bronze Layer architecture.
+
+<img width="1056" height="709" alt="image" src="https://github.com/user-attachments/assets/cd2dbd8d-9a9b-4ffa-aa0c-33c6bf29f3b4" />
+
 
 The project demonstrates industry-standard data engineering practices including:
 
